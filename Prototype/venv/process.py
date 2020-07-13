@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
 # Load Yolo
-net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
+net = cv2.dnn.readNet("D:\\fyp\Codes\yolov3.weights", "yolov3.cfg")
 classes = []
 with open("coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-colors = np.random.uniform(0, 255, size=(len(classes), 3))
+colors = np.random.uniform(0, 100, size=(len(classes), 3))
 #Loading video
 
 cap = cv2.VideoCapture('Test1.mp4')
@@ -57,8 +57,8 @@ while (cap.isOpened()):
                 label = str(classes[class_ids[i]])
                 color = colors[i]
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), color, -1)
-                cv2.putText(frame, label, (x, y + 30), font, 3, color, 3)
+                cv2.rectangle(frame, (x, y-10), (x + w, y), color, -1)
+                cv2.putText(frame, label, (x, y), font, 1, (255,255,255))
 
         #displaying frame
         cv2.imshow('Frame', frame)
@@ -69,3 +69,4 @@ while (cap.isOpened()):
 cap.release()
 cv2.destroyAllWindows()
 
+,
