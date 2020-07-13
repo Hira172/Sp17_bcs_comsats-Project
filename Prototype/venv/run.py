@@ -57,7 +57,7 @@ while (cap.isOpened()):
                 label = str(classes[class_ids[i]])
                 color = colors[i]
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), color, -1)
                 cv2.putText(frame, label, (x, y + 30), font, 3, color, 3)
 
         #displaying frame
