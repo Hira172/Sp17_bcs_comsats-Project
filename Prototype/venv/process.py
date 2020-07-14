@@ -1,5 +1,14 @@
-import cv2
+from imutils import paths
 import numpy as np
+import imutils
+import cv2
+
+KNOWN_DISTANCE = 24.0
+KNOWN_WIDTH = 48.0
+focalLength = 0
+def computeDistance(R,f,r):
+	return (R * f) / r
+
 # Load Yolo
 net = cv2.dnn.readNet("D:\\fyp\Codes\yolov3.weights", "yolov3.cfg")
 classes = []
@@ -8,12 +17,13 @@ with open("coco.names", "r") as f:
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 100, size=(len(classes), 3))
-#Loading video
 
+
+#Loading video
 cap = cv2.VideoCapture('Test1.mp4')
 if (cap.isOpened() == False):
     print("Error opening video stream or file")
-
+#reading video
 while (cap.isOpened()):
     ret, frame = cap.read()
     height, width, channels = frame.shape
@@ -39,7 +49,11 @@ while (cap.isOpened()):
                     center_y = int(detection[1] * height)
                     w = int(detection[2] * width)
                     h = int(detection[3] * height)
+                    #computing distance
+                    if focalLength == 0:
+                        focalLength = (w * KNOWN_DISTANCE) / KNOWN_WIDTH
 
+                    dis = computeDistance(KNOWN_WIDTH,focalLength,w)
                     # Rectangle coordinates
                     x = int(center_x - w / 2)
                     y = int(center_y - h / 2)
@@ -54,11 +68,12 @@ while (cap.isOpened()):
         for i in range(len(boxes)):
             if i in indexes:
                 x, y, w, h = boxes[i]
-                label = str(classes[class_ids[i]])
+                label = str(classes[class_ids[i]]) + str(dis)
                 color = colors[i]
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
                 cv2.rectangle(frame, (x, y-10), (x + w, y), color, -1)
                 cv2.putText(frame, label, (x, y), font, 1, (255,255,255))
+
 
         #displaying frame
         cv2.imshow('Frame', frame)
@@ -69,4 +84,3 @@ while (cap.isOpened()):
 cap.release()
 cv2.destroyAllWindows()
 
-,
