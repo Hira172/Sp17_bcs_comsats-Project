@@ -16,7 +16,6 @@ def find_marker(image):
 	# find the contours in the edged image and keep the largest one;
 	# we'll assume that this is our piece of paper in the image
 	cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
 	cnts = imutils.grab_contours(cnts)
 	c = max(cnts, key = cv2.contourArea)
 
@@ -33,14 +32,13 @@ KNOWN_DISTANCE = 24.0
 
 # initialize the known object width, which in this case, the piece of
 # paper is 12 inches wide
-KNOWN_WIDTH = 12.0
+KNOWN_WIDTH = 11.0
 
 # load the furst image that contains an object that is KNOWN TO BE 2 feet
 # from our camera, then find the paper marker in the image, and initialize
 # the focal length
 image = cv2.imread("images/2ft.png")
 marker = find_marker(image)
-print(marker[1][0])
 focalLength = (marker[1][0] * KNOWN_DISTANCE) / KNOWN_WIDTH
 
 # loop over the images
@@ -55,9 +53,8 @@ for imagePath in sorted(paths.list_images("images")):
 	box = cv2.cv.BoxPoints(marker) if imutils.is_cv2() else cv2.boxPoints(marker)
 	box = np.int0(box)
 	cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
-	print( inches)
 	cv2.putText(image, "%.2fft" % (inches / 12),
-		(60,500 ), cv2.FONT_HERSHEY_SIMPLEX,
+		(50,100), cv2.FONT_HERSHEY_SIMPLEX,
 		2.0, (0, 255, 0), 3)
 	cv2.imshow("image", image)
 	cv2.waitKey(0)
