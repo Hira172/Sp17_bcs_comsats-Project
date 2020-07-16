@@ -1,6 +1,5 @@
-from imutils import paths
+
 import numpy as np
-import imutils
 import cv2
 
 # Load Yolo
@@ -15,7 +14,7 @@ colors = np.random.uniform(0, 100, size=(len(classes), 3))
 xr0=0
 xl0=0
 z0=1
-f=50   # noraml focal length (mm)
+f=1.9685   # noraml focal length (inches)
 #calculate the distance
 def calDist(xl,xr,w):
     global xr0,xl0,z0
@@ -77,12 +76,14 @@ while (cap.isOpened()):
 
 
                     if len(dists) == len(prevDists):
-                        for z1,zo in zip(dists,prevDists):
-                            S= z1/z0
+                        for z1,zo in zip(dists,prevDists) :
+                            if z1 == 0:
+                                TCC.append(1000)
+                                continue
+                            S= z0/z1
                             if S == 1:
                                 TCC.append(1000)
                                 continue
-
                             Tm = 00.4/ (S-1)    # 0.4 comes from considering 24 frames per sec
                             print(Tm)
                             C = Tm + 1
@@ -111,7 +112,7 @@ while (cap.isOpened()):
                 cv2.putText(frame, label, (x, y), font, 1, (255,255,255))
 
         prevDists=dists
-        print(TCC)
+        # print(TCC)
 
         #displaying frame
         cv2.imshow('Frame', frame)
