@@ -4,8 +4,10 @@ from src.model import Model
 from src.classifier import Classifier
 
 import numpy as np
+import cv2
 import logging
 
+# WEIGHTS_FILE = 'D:\\fyp\Codes\\try\Sp17_bcs_comsats-Project\yolov3.weights' # For Hira's system
 WEIGHTS_FILE = 'yolov3.weights'
 CONFIGS_FILE = 'yolov3.cfg'
 CLASSES_FILE = 'coco.names'
@@ -42,16 +44,26 @@ def main():
         indexes = classifier.get_frame_classification(frame, height, width, prev_dists)
 
         # label possibly multiple identified objects in a frame
-        for i in range(len(classifier.boxes)):
-            if i in indexes:
-                x, y, w, h = classifier.boxes[i]
-                label = str(classifier.classes[classifier.class_ids[i]]) + " " + str(round(classifier.dists[i],3))
-                if i < len(classifier.TCC):
-                    label = label+"  " + str(classifier.TCC[i])
-                color = model.colors[i]
-                f.draw_rect(frame, (x, y), (x + w, y + h), color, 2)
-                f.draw_rect(frame, (x, y-10), (x + w, y), color, -1)
-                f.put_text(frame, label, (x,y), f.font, 1, (255,255,255))
+        i = 0
+        # for i in range(len(classifier.boxes)):
+        if i in indexes:
+            x, y, w, h = classifier.boxes[i]
+            label = "Class: "+str(classifier.classes[classifier.class_ids[i]])
+            label2 = "distance: "+ str(round(classifier.dists[i],3))
+            if i < len(classifier.TCC):
+                label3 = "TTC: " + str(round(classifier.TCC[i],3))
+            color = model.colors[i]
+            f.draw_rect(frame, (x, y), (x + w, y+h), color, 2) # bounding box
+            h3 = 3*30
+            print("w",w,"h",h,"x",x,"y",y)
+            f.draw_rect(frame, (x-85, y-h3), (x +85 + 85, y-30), (0,0,255), -1) # arrow rectangle
+            mid_w=85/2
+            triangle_cnt = np.array([(x+85+85 , y-30),(x-85, y-30) ,(x+int(mid_w), y)]) # arrow traingle
+            cv2.drawContours(frame, [triangle_cnt], 0,  (0,0,255), -1)
+
+            f.put_text(frame, label, (x, y-h3+17), f.font, 1, (255,255,255))
+            f.put_text(frame, label2, (x, y - h3 + 37), f.font, 1, (255, 255, 255))
+            f.put_text(frame, label3, (x, y - h3 + 57), f.font, 1, (255, 255, 255))
 
         prev_dists = classifier.dists
 
