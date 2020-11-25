@@ -1,0 +1,137 @@
+body,html {
+    margin: 0;
+    font: bold 14px/1.4 'Open Sans', arial, sans-serif;
+    overflow: hidden;
+    height: 100%;
+}
+.bod{
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    /* opacity: 0.6; */
+}
+.bod::after{
+    content: "";
+    background:linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0,0.8)), url(https://etimg.etb2bimg.com/photo/71740840.cms);
+    background-size: cover;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+}
+.black-bg{
+    background: #000;
+}
+.float-contant{
+    float: right;
+}
+.width100{
+    width: 100%;
+}
+.brandName{
+    padding-left: 2em;
+    text-decoration: none;
+    color: white;
+    font-size: 2em;
+    font-weight: 800;
+}
+.brandName:hover{
+    color: white;
+    text-decoration: none;
+}
+ul { 
+    position: relative;
+    margin-right: 0px;
+    right: 1em;
+    margin-left: auto;
+    padding: 0; 
+    list-style: none; 
+    display: table;
+    text-align: center;
+}
+li { 
+    display: table-cell; 
+    position: relative; 
+    padding: 15px 0;
+}
+ul>li>a {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    font-size: small;
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+}
+ul>li>a:hover{
+    color: darkred;
+    font-weight: 600;
+    font-size: small;
+}
+ul>li>a:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+ul>li>a:hover:after { 
+    color: darkred;
+    width: 100%; 
+    left: 0; 
+}
+.active_now{
+    color: darkred;
+    font-weight: 900;
+}
+.active_now:hover{
+    color: darkred;
+    font-weight: 900;
+}
+
+#myFile{
+    color: grey;
+}
+
+.buttn{
+    background-color: darkred;
+    height: 4em;
+    color: white;
+    width: 60%;
+    margin-left:20% ;
+    box-shadow: 4px 4px 5px darkslategrey;
+}
+.buttn:hover{
+    background-color: red;
+    color: white;
+}
+.overBg{
+    margin-top: 9%;
+    margin-right: 20%;
+    margin-left: 20%;
+    margin-bottom: 3%;
+    background-color:rgba(255, 255, 255, 0.2);
+    padding-left:2em;
+    padding-right: 2em;
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+input{
+    padding-top: 1em;
+    padding-left: 30%;
+    padding-bottom: 1em;
+}
+h3{
+    color: white;
+    text-align: center;
+}

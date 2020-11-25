@@ -1,6 +1,6 @@
 from yolo.utils import Load_Yolo_model
 import sys, getopt
-from core import system
+from core import core
 from yolo.configs import YOLO_INPUT_SIZE
 
 
@@ -48,7 +48,8 @@ def main(argv):
 
 
     yolo = Load_Yolo_model()
-    system(yolo, video_path, "detection.avi", input_size=YOLO_INPUT_SIZE, show=True, iou_threshold=0.1,rectangle_colors=(255,0,0),Track_only = ['car','truck','motorbike','person'], display_tm = tm, realTime = rt )
+    c = core()
+    c.system(yolo, video_path, "detection.avi", input_size=YOLO_INPUT_SIZE, show=True, iou_threshold=0.1,rectangle_colors=(255,0,0),Track_only = ['car','truck','motorbike','person'], display_tm = tm, realTime = rt )
 
 
 
